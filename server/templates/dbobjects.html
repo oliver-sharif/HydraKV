@@ -1,0 +1,105 @@
+{{ define "dbobjects" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB Objects</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #f2f2f2;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        th {
+            background: #e6e6e6;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+<h1>Database Objects</h1>
+
+<script>
+    function deleteDb(dbname, apiKeyEnabled) {
+        let apiKey = "";
+        if (apiKeyEnabled) {
+            apiKey = prompt("Bitte geben Sie den API-Key für die Datenbank '" + dbname + "' ein:");
+            if (apiKey === null) return; // Abbrechen
+        }
+
+        if (confirm("Sind Sie sicher, dass Sie die Datenbank '" + dbname + "' löschen möchten?")) {
+            fetch("/db/" + dbname, {
+                method: "DELETE",
+                headers: {
+                    "X-API-Key": apiKey
+                }
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert("Fehler beim Löschen der Datenbank: " + response.statusText);
+                }
+            }).catch(error => {
+                alert("Ein Fehler ist aufgetreten: " + error);
+            });
+        }
+    }
+</script>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Entries</th>
+        <th>Baskets</th>
+        <th style="width: 50px; text-align: center;">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ range .DBs }}
+    <tr>
+        <td>{{ .Name }}</td>
+        <td>{{ .Entries }}</td>
+        <td>{{ .Baskets }}</td>
+        <td style="text-align: center;">
+            <button class="delete-btn" onclick="deleteDb('{{ .Name }}', {{ if $.ApiKeyEnabled }}true{{ else }}false{{ end }})">X</button>
+        </td>
+    </tr>
+    {{ else }}
+    <tr>
+        <td colspan="4">No objects found</td>
+    </tr>
+    {{ end }}
+    </tbody>
+</table>
+</body>
+</html>
+{{ end }}
