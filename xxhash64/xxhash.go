@@ -189,35 +189,32 @@ static uint64_t xxhash64_scalar_seed(const void *input, size_t len, uint64_t see
 //   AVX2 optimized - maximum performance
 // ============================================================================
 
-// Multiply two 64-bit values using AVX2 (emulated via 32-bit muls)
+// Multiply two 64-bit values using AVX2 (low 64-bit result)
 static inline __m256i xxh_mul64_avx2(__m256i a, __m256i b) {
-    // Split into 32-bit parts
-    __m256i a_lo = _mm256_and_si256(a, _mm256_set1_epi64x(0xFFFFFFFF));
+    __m256i a_lo = _mm256_and_si256(a, _mm256_set1_epi64x(0xFFFFFFFFULL));
     __m256i a_hi = _mm256_srli_epi64(a, 32);
-    __m256i b_lo = _mm256_and_si256(b, _mm256_set1_epi64x(0xFFFFFFFF));
+    __m256i b_lo = _mm256_and_si256(b, _mm256_set1_epi64x(0xFFFFFFFFULL));
     __m256i b_hi = _mm256_srli_epi64(b, 32);
 
-    // lo * lo
     __m256i lo_lo = _mm256_mul_epu32(a_lo, b_lo);
-
-    // lo * hi + hi * lo (middle terms)
     __m256i lo_hi = _mm256_mul_epu32(a_lo, b_hi);
     __m256i hi_lo = _mm256_mul_epu32(a_hi, b_lo);
+
     __m256i middle = _mm256_add_epi64(lo_hi, hi_lo);
     middle = _mm256_slli_epi64(middle, 32);
 
-    // hi * hi
-    __m256i hi_hi = _mm256_mul_epu32(a_hi, b_hi);
-    hi_hi = _mm256_slli_epi64(hi_hi, 64); // This will overflow, but only low 64 bits matter
-
-    // Combine all parts
-    __m256i result = _mm256_add_epi64(lo_lo, middle);
-
-    return result;
+    return _mm256_add_epi64(lo_lo, middle);
 }
 
 static inline __m256i xxh_rotl64_avx2(__m256i v, int r) {
     return _mm256_or_si256(_mm256_slli_epi64(v, r), _mm256_srli_epi64(v, 64 - r));
+}
+
+static inline __m256i xxh_round_avx2(__m256i acc, __m256i input) {
+    acc = _mm256_add_epi64(acc, xxh_mul64_avx2(input, _mm256_set1_epi64x(XXH_PRIME64_2)));
+    acc = xxh_rotl64_avx2(acc, 31);
+    acc = xxh_mul64_avx2(acc, _mm256_set1_epi64x(XXH_PRIME64_1));
+    return acc;
 }
 
 static uint64_t xxhash64_avx2_seed(const void *input, size_t len, uint64_t seed) {
@@ -228,75 +225,39 @@ static uint64_t xxhash64_avx2_seed(const void *input, size_t len, uint64_t seed)
     if (len >= 32) {
         const uint8_t *limit = end - 32;
 
-        // Process 4 lanes at once, but keep them in separate variables for better throughput
-        uint64_t v1 = seed + XXH_PRIME64_1 + XXH_PRIME64_2;
-        uint64_t v2 = seed + XXH_PRIME64_2;
-        uint64_t v3 = seed + 0;
-        uint64_t v4 = seed - XXH_PRIME64_1;
+        __m256i v = _mm256_set_epi64x(
+            (int64_t)(seed - XXH_PRIME64_1),
+            (int64_t)(seed + 0),
+            (int64_t)(seed + XXH_PRIME64_2),
+            (int64_t)(seed + XXH_PRIME64_1 + XXH_PRIME64_2)
+        );
 
         // Unroll loop by 4 for better ILP
         while (p + 128 <= end) {
-            // Iteration 1
-            uint64_t s1 = xxh_read64(p + 0);
-            uint64_t s2 = xxh_read64(p + 8);
-            uint64_t s3 = xxh_read64(p + 16);
-            uint64_t s4 = xxh_read64(p + 24);
+            __m256i b0 = _mm256_loadu_si256((const __m256i*)(p + 0));
+            __m256i b1 = _mm256_loadu_si256((const __m256i*)(p + 32));
+            __m256i b2 = _mm256_loadu_si256((const __m256i*)(p + 64));
+            __m256i b3 = _mm256_loadu_si256((const __m256i*)(p + 96));
 
-            v1 = xxh_round(v1, s1);
-            v2 = xxh_round(v2, s2);
-            v3 = xxh_round(v3, s3);
-            v4 = xxh_round(v4, s4);
-
-            // Iteration 2
-            s1 = xxh_read64(p + 32);
-            s2 = xxh_read64(p + 40);
-            s3 = xxh_read64(p + 48);
-            s4 = xxh_read64(p + 56);
-
-            v1 = xxh_round(v1, s1);
-            v2 = xxh_round(v2, s2);
-            v3 = xxh_round(v3, s3);
-            v4 = xxh_round(v4, s4);
-
-            // Iteration 3
-            s1 = xxh_read64(p + 64);
-            s2 = xxh_read64(p + 72);
-            s3 = xxh_read64(p + 80);
-            s4 = xxh_read64(p + 88);
-
-            v1 = xxh_round(v1, s1);
-            v2 = xxh_round(v2, s2);
-            v3 = xxh_round(v3, s3);
-            v4 = xxh_round(v4, s4);
-
-            // Iteration 4
-            s1 = xxh_read64(p + 96);
-            s2 = xxh_read64(p + 104);
-            s3 = xxh_read64(p + 112);
-            s4 = xxh_read64(p + 120);
-
-            v1 = xxh_round(v1, s1);
-            v2 = xxh_round(v2, s2);
-            v3 = xxh_round(v3, s3);
-            v4 = xxh_round(v4, s4);
+            v = xxh_round_avx2(v, b0);
+            v = xxh_round_avx2(v, b1);
+            v = xxh_round_avx2(v, b2);
+            v = xxh_round_avx2(v, b3);
 
             p += 128;
         }
 
         // Handle remaining 32-byte blocks
         while (p <= limit) {
-            uint64_t s1 = xxh_read64(p + 0);
-            uint64_t s2 = xxh_read64(p + 8);
-            uint64_t s3 = xxh_read64(p + 16);
-            uint64_t s4 = xxh_read64(p + 24);
-
-            v1 = xxh_round(v1, s1);
-            v2 = xxh_round(v2, s2);
-            v3 = xxh_round(v3, s3);
-            v4 = xxh_round(v4, s4);
-
+            __m256i b = _mm256_loadu_si256((const __m256i*)p);
+            v = xxh_round_avx2(v, b);
             p += 32;
         }
+
+        uint64_t v1 = (uint64_t)_mm256_extract_epi64(v, 0);
+        uint64_t v2 = (uint64_t)_mm256_extract_epi64(v, 1);
+        uint64_t v3 = (uint64_t)_mm256_extract_epi64(v, 2);
+        uint64_t v4 = (uint64_t)_mm256_extract_epi64(v, 3);
 
         h = xxh_rotl64(v1, 1)
           + xxh_rotl64(v2, 7)
