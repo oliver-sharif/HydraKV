@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"hydrakv/envhandler"
+	"hydrakv/logo"
 	server2 "hydrakv/server"
 	"log"
 	"os"
@@ -12,6 +13,10 @@ import (
 )
 
 func main() {
+
+	// Load the Logo
+	l := logo.NewLogo()
+	l.ShowLogo()
 
 	// Create stop channel
 	stop := make(chan os.Signal, 1)
