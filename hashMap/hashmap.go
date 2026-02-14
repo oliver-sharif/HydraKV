@@ -127,6 +127,9 @@ func NewHashMap(name string) (*HashMap, error) {
 		return nil, err
 	}
 
+	// Start the ttlmanager
+	hm.TTlManager.Start()
+
 	return hm, nil
 }
 
