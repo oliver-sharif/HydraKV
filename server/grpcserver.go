@@ -265,3 +265,47 @@ func (s *KVService) Exists(
 	ok := s.kv.DBExists(req.Db)
 	return &kvpb.ExistsResponse{Exists: ok}, nil
 }
+
+func (s *KVService) FiFoLiFoDelete(
+	ctx context.Context,
+	req *kvpb.FiFoLiFoDeleteRequest,
+) (*kvpb.OKResponse, error) {
+	err := s.kv.DelFiFoLiFo(req.Name)
+	if err != nil {
+		return &kvpb.OKResponse{Ok: false}, status.Error(codes.NotFound, err.Error())
+	}
+	return &kvpb.OKResponse{Ok: true}, nil
+}
+
+func (s *KVService) FiFoLiFoPush(
+	ctx context.Context,
+	req *kvpb.FiFoLiFoPushRequest,
+) (*kvpb.OKResponse, error) {
+	ok, err := s.kv.PushEntryFiFoLiFo(req.Name, req.Value)
+	if err != nil {
+		return &kvpb.OKResponse{Ok: false}, status.Error(codes.Internal, err.Error())
+	}
+	return &kvpb.OKResponse{Ok: ok}, nil
+}
+
+func (s *KVService) FiFoLiFoFPop(
+	ctx context.Context,
+	req *kvpb.FiFoLiFoPopRequest,
+) (*kvpb.FiFoLiFoPopResponse, error) {
+	val, err := s.kv.PopEntryFiFo(req.Name)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	return &kvpb.FiFoLiFoPopResponse{Value: val}, nil
+}
+
+func (s *KVService) FiFoLiFoLPop(
+	ctx context.Context,
+	req *kvpb.FiFoLiFoPopRequest,
+) (*kvpb.FiFoLiFoPopResponse, error) {
+	val, err := s.kv.PopEntryLiFo(req.Name)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	return &kvpb.FiFoLiFoPopResponse{Value: val}, nil
+}
