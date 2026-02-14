@@ -41,6 +41,9 @@ COPY --from=builder /app/hydrakv .
 # Copy HTML templates needed at runtime
 COPY --from=builder /app/server/templates ./server/templates
 
+# copy the logo file
+COPY --from=builder /app/logo.txt .
+
 # Expose the port
 EXPOSE 9191
 
