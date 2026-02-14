@@ -42,8 +42,6 @@ func NewTTLManager(name string, delFunc func(key string) bool) *TTLManager {
 	// init lastDeleted to
 	ttl.lastDeleted.Store(time.Now().Unix())
 
-	// Start the TTLManager
-	ttl.Start()
 	log.Println("TTLManager for DB " + name + " initialized..")
 	return ttl
 }
