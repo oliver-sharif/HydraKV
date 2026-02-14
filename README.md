@@ -193,3 +193,6 @@ go build -o hydrakv main.go
 docker build -t hydrakv .
 docker run -p 9191:9191 -p 9292:9292 -v $(pwd)/data:/data hydrakv
 ```
+
+
+Have Fun using HydraKV!
