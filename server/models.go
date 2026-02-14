@@ -15,6 +15,27 @@ type NewDBCreated struct {
 	Exists  bool   `json:"exists"`
 }
 
+type NewLiFoFifo struct {
+	Name  string `json:"name" validate:"required,alphanum,min=1,max=100"`
+	Limit int    `json:"limit" validate:"required,min=1,max=2000000"`
+}
+
+type DeleteFiFoLiFo struct {
+	ApiKey string `json:"api_key"`
+	Name   string `json:"name" validate:"required,alphanum,min=1,max=100"`
+}
+
+type PushFiFoLiFo struct {
+	ApiKey string `json:"api_key"`
+	Name   string `json:"name" validate:"required,alphanum,min=1,max=100"`
+	Value  string `json:"value" validate:"required,min=1,max=30000"`
+}
+
+type PopFiFoLiFo struct {
+	ApiKey string `json:"api_key"`
+	Name   string `json:"name" validate:"required,alphanum,min=1,max=100"`
+}
+
 type Set struct {
 	ApiKey string `json:"api_key"`
 	Ttl    int    `json:"ttl"`

@@ -233,6 +233,119 @@ func (s *Server) HealthHandler(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("ok"))
 }
 
+/*************************/
+/* Handlers for FiFoLiFo */
+/*************************/
+
+// CreateFiFoLiFo creates a new FiFoLiFo
+func (s *Server) CreateFiFoLiFo(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+
+	// Here we have no need to bootstrap the request, since we dont need any DB info
+	err, payload := readPayloadAndValidate[NewLiFoFifo](r.Body, s)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// Create the FiFoLiFo
+	err = s.AddFifoLifo(payload.Name, payload.Limit)
+	if err != nil {
+		w.WriteHeader(http.StatusConflict)
+		log.Println(err)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
+
+// DeleteFiFoLiFo deletes a FiFoLiFo
+func (s *Server) DeleteFiFoLiFo(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+
+	// Here we have no need to bootstrap the request, since we dont need any DB info
+	err, payload := readPayloadAndValidate[DeleteFiFoLiFo](r.Body, s)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = s.DelFiFoLiFo(payload.Name)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println(err)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+// PushToFiFoLiFo pushes a value to a FiFoLiFo
+func (s *Server) PushToFiFoLiFo(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+
+	// Here we have no need to bootstrap the request, since we dont need any DB info
+	err, payload := readPayloadAndValidate[PushFiFoLiFo](r.Body, s)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// Push
+	pushed, err := s.PushEntryFiFoLiFo(payload.Name, payload.Value)
+	if err != nil || !pushed {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+// PopFromFiFo pops a value from a FiFoLiFo
+func (s *Server) PopFromFiFo(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+
+	// Here we have no need to bootstrap the request, since we dont need any DB info
+	err, payload := readPayloadAndValidate[PopFiFoLiFo](r.Body, s)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// Pop
+	data, err := s.PopEntryFiFo(payload.Name)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	// return the data
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(data)
+}
+
+// PopFromLiFo pops a value from a FiFoLiFo
+func (s *Server) PopFromLiFo(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+
+	// Here we have no need to bootstrap the request, since we dont need any DB info
+	err, payload := readPayloadAndValidate[PopFiFoLiFo](r.Body, s)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// Pop
+	data, err := s.PopEntryLiFo(payload.Name)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	// return the data
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(data)
+}
+
 // bootstrap checks if the DB exists, sets MaxHeaderBytes to the entry size and checks the dbname
 func (s *Server) bootstrap(r *http.Request, w http.ResponseWriter) (string, error) {
 	// secure request

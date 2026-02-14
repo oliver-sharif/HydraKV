@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM docker.io/library/golang:1.25.5-alpine AS builder
+FROM docker.io/library/golang:1.26.0-alpine AS builder
 
 # disable telemetry
 ENV GOTELEMETRY=off

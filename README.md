@@ -123,6 +123,33 @@ All JSON payloads must match the internal models.
 - **Endpoint**: `GET /health`
 - **Response**: `ok`
 
+#### 13. Create FiFo/LiFo
+- **Endpoint**: `POST /fifolifo`
+- **Payload**: `{"name": "my_queue", "limit": 100}`
+- **Success**: `201 Created`
+- **Error**: `409 Conflict` if the FiFo/LiFo already exists.
+
+#### 14. Delete FiFo/LiFo
+- **Endpoint**: `DELETE /fifolifo`
+- **Payload**: `{"name": "my_queue"}`
+- **Success**: `200 OK`
+- **Error**: `404 Not Found` if the FiFo/LiFo does not exist.
+
+#### 15. Push to FiFo/LiFo
+- **Endpoint**: `PUT /fifolifo`
+- **Payload**: `{"name": "my_queue", "value": "some data"}`
+- **Success**: `200 OK`
+
+#### 16. Pop from FiFo (Queue semantics)
+- **Endpoint**: `POST /fifo`
+- **Payload**: `{"name": "my_queue"}`
+- **Response**: JSON-String mit dem gepoppten Wert, z. B.: `"some data"`
+
+#### 17. Pop from LiFo (Stack semantics)
+- **Endpoint**: `POST /lifo`
+- **Payload**: `{"name": "my_queue"}`
+- **Response**: JSON-String mit dem gepoppten Wert, z. B.: `"some data"`
+
 ---
 
 ### gRPC API

@@ -2,8 +2,10 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"hydrakv/envhandler"
+	"hydrakv/fifolifo"
 	"hydrakv/hashMap"
 	"hydrakv/restartcheck"
 	"hydrakv/utils"
@@ -26,6 +28,7 @@ type Server struct {
 	ip        string
 	Server    *http.Server
 	dbs       map[string]*hashMap.HashMap
+	fifolifos map[string]*fifolifo.FifoLifo
 	validate  *validator.Validate
 	templates *template.Template
 	mut       *sync.RWMutex
@@ -47,6 +50,11 @@ type kvLogic interface {
 	Incr(db, key, amount string) bool
 	Del(db, key string) bool
 	DBExists(db string) bool
+	AddFifoLifo(name string, maxEntries int) error
+	DelFiFoLiFo(name string) error
+	PushEntryFiFoLiFo(fifolifoName string, data string) (bool, error)
+	PopEntryFiFo(fifolifoName string) (string, error)
+	PopEntryLiFo(fifolifoName string) (string, error)
 }
 
 // NewServer initializes and returns a new Server instance configured with the provided port and IP address.
@@ -100,6 +108,7 @@ func NewServer(port int, ip string) *Server {
 	})
 
 	server.dbs = make(map[string]*hashMap.HashMap)
+	server.fifolifos = make(map[string]*fifolifo.FifoLifo)
 	server.validate = validator.New()
 	server.templates = templates
 	server.mut = &sync.RWMutex{}
@@ -140,6 +149,21 @@ func NewServer(port int, ip string) *Server {
 
 	// Gets a value from a DB
 	privateMux.HandleFunc("POST /db/{dbname}/keys", server.GetValue)
+
+	// Creates a new FiFoLiFo
+	privateMux.HandleFunc("POST /fifolifo", server.CreateFiFoLiFo)
+
+	// Deletes a new FiFoLifo
+	privateMux.HandleFunc("DELETE /fifolifo", server.DeleteFiFoLiFo)
+
+	// Pushes a value to a FiFoLiFo
+	privateMux.HandleFunc("PUT /fifolifo", server.PushToFiFoLiFo)
+
+	// Pops a value from a FiFo
+	privateMux.HandleFunc("POST /fifo", server.PopFromFiFo)
+
+	// Pops a value from a Lifo
+	privateMux.HandleFunc("POST /lifo", server.PopFromLiFo)
 
 	// Changes a apikey for a existing DB
 	privateMux.HandleFunc("UPDATE /db/{dbname}", server.ChangeApiKey)
@@ -376,6 +400,66 @@ func (s *Server) ListDBs() []*DBObject {
 		dbs = append(dbs, &DBObject{Name: name, Entries: entries, Baskets: baskets})
 	}
 	return dbs
+}
+
+// AddFifoLifo adds a new FifoLifo instance to the server's map of FifoLifos, keyed by the specified name.'
+func (s *Server) AddFifoLifo(name string, maxEntries int) error {
+	s.mut.Lock()
+	defer s.mut.Unlock()
+
+	if _, ok := s.fifolifos[name]; ok {
+		return fmt.Errorf("FifoLifo with name %s already exists", name)
+	}
+
+	var err error
+	s.fifolifos[name], err = fifolifo.NewFiFoLiFo(name, maxEntries)
+	return err
+}
+
+// DelFiFoLiFo deletes a FifoLifo instance from the server's map of FifoLifos, keyed by the specified name.'
+func (s *Server) DelFiFoLiFo(name string) error {
+	s.mut.Lock()
+	defer s.mut.Unlock()
+
+	if _, ok := s.fifolifos[name]; !ok {
+		return fmt.Errorf("FifoLifo with name %s does not exist", name)
+	}
+	delete(s.fifolifos, name)
+	return nil
+}
+
+// PushEntryFiFoLiFo adds an Entry to the Fifo Lifo
+func (s *Server) PushEntryFiFoLiFo(fifolifoName, data string) (bool, error) {
+	s.mut.RLock()
+	defer s.mut.RUnlock()
+
+	// We are checking for empty data in the Api - so dont worry here :) ++ look in models!
+	if _, ok := s.fifolifos[fifolifoName]; !ok {
+		return false, fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return s.fifolifos[fifolifoName].Push(data)
+}
+
+// PopEntryFiFo removes an Entry from the Fifo Lifo
+func (s *Server) PopEntryFiFo(fifolifoName string) (string, error) {
+	s.mut.RLock()
+	defer s.mut.RUnlock()
+
+	if _, ok := s.fifolifos[fifolifoName]; !ok {
+		return "", fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return s.fifolifos[fifolifoName].FPop()
+}
+
+// PopEntryLiFo removes an Entry from the Lifo Lifo
+func (s *Server) PopEntryLiFo(fifolifoName string) (string, error) {
+	s.mut.RLock()
+	defer s.mut.RUnlock()
+
+	if _, ok := s.fifolifos[fifolifoName]; !ok {
+		return "", fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return s.fifolifos[fifolifoName].LPop()
 }
 
 // DBDelete deletes a database by name, closes its instance, removes its AOF file, and updates the server's database map.
