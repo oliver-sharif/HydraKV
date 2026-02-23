@@ -270,7 +270,7 @@ func (s *KVService) FiFoLiFoDelete(
 	ctx context.Context,
 	req *kvpb.FiFoLiFoDeleteRequest,
 ) (*kvpb.OKResponse, error) {
-	err := s.kv.DelFiFoLiFo(req.Name)
+	err := s.kv.DelFiFoLiFo(req.Db, req.Name)
 	if err != nil {
 		return &kvpb.OKResponse{Ok: false}, status.Error(codes.NotFound, err.Error())
 	}
@@ -281,7 +281,7 @@ func (s *KVService) FiFoLiFoPush(
 	ctx context.Context,
 	req *kvpb.FiFoLiFoPushRequest,
 ) (*kvpb.OKResponse, error) {
-	ok, err := s.kv.PushEntryFiFoLiFo(req.Name, req.Value)
+	ok, err := s.kv.PushEntryFiFoLiFo(req.Db, req.Name, req.Value)
 	if err != nil {
 		return &kvpb.OKResponse{Ok: false}, status.Error(codes.Internal, err.Error())
 	}
@@ -292,7 +292,7 @@ func (s *KVService) FiFoLiFoFPop(
 	ctx context.Context,
 	req *kvpb.FiFoLiFoPopRequest,
 ) (*kvpb.FiFoLiFoPopResponse, error) {
-	val, err := s.kv.PopEntryFiFo(req.Name)
+	val, err := s.kv.PopEntryFiFo(req.Db, req.Name)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -303,7 +303,7 @@ func (s *KVService) FiFoLiFoLPop(
 	ctx context.Context,
 	req *kvpb.FiFoLiFoPopRequest,
 ) (*kvpb.FiFoLiFoPopResponse, error) {
-	val, err := s.kv.PopEntryLiFo(req.Name)
+	val, err := s.kv.PopEntryLiFo(req.Db, req.Name)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

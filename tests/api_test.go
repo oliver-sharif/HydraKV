@@ -201,6 +201,9 @@ func TestAPI_Incr(t *testing.T) {
 	doJSON(t, client, http.MethodPost, base+"/create", serverpkg.NewDB{Name: "incdb"})
 
 	// 1. Incr on new key (PATCH)
+	// Delete first to ensure a clean state
+	doJSON(t, client, http.MethodDelete, base+"/db/incdb/keys", serverpkg.Key{Key: "counter"})
+
 	payload := serverpkg.Set{Key: "counter", Value: "100"}
 	resp, body := doJSON(t, client, http.MethodPatch, base+"/db/incdb", payload)
 	if resp.StatusCode != http.StatusOK {

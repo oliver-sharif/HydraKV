@@ -241,6 +241,13 @@ func (s *Server) HealthHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) CreateFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	// bootstrap the request
+	dbname, err := s.bootstrap(r, w)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	// Here we have no need to bootstrap the request, since we dont need any DB info
 	err, payload := readPayloadAndValidate[NewLiFoFifo](r.Body, s)
 	if err != nil {
@@ -249,7 +256,7 @@ func (s *Server) CreateFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create the FiFoLiFo
-	err = s.AddFifoLifo(payload.Name, payload.Limit)
+	err = s.AddFifoLifo(dbname, payload.Name, payload.Limit)
 	if err != nil {
 		w.WriteHeader(http.StatusConflict)
 		log.Println(err)
@@ -262,13 +269,20 @@ func (s *Server) CreateFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 func (s *Server) DeleteFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	// bootstrap the request
+	dbname, err := s.bootstrap(r, w)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	// Here we have no need to bootstrap the request, since we dont need any DB info
 	err, payload := readPayloadAndValidate[DeleteFiFoLiFo](r.Body, s)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = s.DelFiFoLiFo(payload.Name)
+	err = s.DelFiFoLiFo(dbname, payload.Name)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		log.Println(err)
@@ -281,6 +295,13 @@ func (s *Server) DeleteFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 func (s *Server) PushToFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	// bootstrap the request
+	dbname, err := s.bootstrap(r, w)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	// Here we have no need to bootstrap the request, since we dont need any DB info
 	err, payload := readPayloadAndValidate[PushFiFoLiFo](r.Body, s)
 	if err != nil {
@@ -289,7 +310,7 @@ func (s *Server) PushToFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Push
-	pushed, err := s.PushEntryFiFoLiFo(payload.Name, payload.Value)
+	pushed, err := s.PushEntryFiFoLiFo(dbname, payload.Name, payload.Value)
 	if err != nil || !pushed {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err)
@@ -302,6 +323,13 @@ func (s *Server) PushToFiFoLiFo(w http.ResponseWriter, r *http.Request) {
 func (s *Server) PopFromFiFo(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	// bootstrap the request
+	dbname, err := s.bootstrap(r, w)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	// Here we have no need to bootstrap the request, since we dont need any DB info
 	err, payload := readPayloadAndValidate[PopFiFoLiFo](r.Body, s)
 	if err != nil {
@@ -310,7 +338,7 @@ func (s *Server) PopFromFiFo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Pop
-	data, err := s.PopEntryFiFo(payload.Name)
+	data, err := s.PopEntryFiFo(dbname, payload.Name)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err)
@@ -326,6 +354,13 @@ func (s *Server) PopFromFiFo(w http.ResponseWriter, r *http.Request) {
 func (s *Server) PopFromLiFo(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	// bootstrap the request
+	dbname, err := s.bootstrap(r, w)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	// Here we have no need to bootstrap the request, since we dont need any DB info
 	err, payload := readPayloadAndValidate[PopFiFoLiFo](r.Body, s)
 	if err != nil {
@@ -334,7 +369,7 @@ func (s *Server) PopFromLiFo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Pop
-	data, err := s.PopEntryLiFo(payload.Name)
+	data, err := s.PopEntryLiFo(dbname, payload.Name)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err)

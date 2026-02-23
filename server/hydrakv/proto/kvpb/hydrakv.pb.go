@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.4
-// source: server/hydrakv.proto
+// source: hydrakv.proto
 
 package kvpb
 
@@ -31,7 +31,7 @@ type CreateDBRequest struct {
 
 func (x *CreateDBRequest) Reset() {
 	*x = CreateDBRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[0]
+	mi := &file_hydrakv_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *CreateDBRequest) String() string {
 func (*CreateDBRequest) ProtoMessage() {}
 
 func (x *CreateDBRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[0]
+	mi := &file_hydrakv_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *CreateDBRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDBRequest.ProtoReflect.Descriptor instead.
 func (*CreateDBRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{0}
+	return file_hydrakv_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *CreateDBRequest) GetName() string {
@@ -79,7 +79,7 @@ type SetRequest struct {
 
 func (x *SetRequest) Reset() {
 	*x = SetRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[1]
+	mi := &file_hydrakv_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -91,7 +91,7 @@ func (x *SetRequest) String() string {
 func (*SetRequest) ProtoMessage() {}
 
 func (x *SetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[1]
+	mi := &file_hydrakv_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -104,7 +104,7 @@ func (x *SetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRequest.ProtoReflect.Descriptor instead.
 func (*SetRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{1}
+	return file_hydrakv_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SetRequest) GetDb() string {
@@ -153,7 +153,7 @@ type GetRequest struct {
 
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[2]
+	mi := &file_hydrakv_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -165,7 +165,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[2]
+	mi := &file_hydrakv_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -178,7 +178,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{2}
+	return file_hydrakv_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetRequest) GetDb() string {
@@ -213,7 +213,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[3]
+	mi := &file_hydrakv_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -225,7 +225,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[3]
+	mi := &file_hydrakv_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -238,7 +238,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{3}
+	return file_hydrakv_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *DeleteRequest) GetDb() string {
@@ -274,7 +274,7 @@ type IncrRequest struct {
 
 func (x *IncrRequest) Reset() {
 	*x = IncrRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[4]
+	mi := &file_hydrakv_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -286,7 +286,7 @@ func (x *IncrRequest) String() string {
 func (*IncrRequest) ProtoMessage() {}
 
 func (x *IncrRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[4]
+	mi := &file_hydrakv_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -299,7 +299,7 @@ func (x *IncrRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IncrRequest.ProtoReflect.Descriptor instead.
 func (*IncrRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{4}
+	return file_hydrakv_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *IncrRequest) GetDb() string {
@@ -339,7 +339,7 @@ type ExistsRequest struct {
 
 func (x *ExistsRequest) Reset() {
 	*x = ExistsRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[5]
+	mi := &file_hydrakv_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -351,7 +351,7 @@ func (x *ExistsRequest) String() string {
 func (*ExistsRequest) ProtoMessage() {}
 
 func (x *ExistsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[5]
+	mi := &file_hydrakv_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -364,7 +364,7 @@ func (x *ExistsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExistsRequest.ProtoReflect.Descriptor instead.
 func (*ExistsRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{5}
+	return file_hydrakv_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ExistsRequest) GetDb() string {
@@ -383,7 +383,7 @@ type OKResponse struct {
 
 func (x *OKResponse) Reset() {
 	*x = OKResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[6]
+	mi := &file_hydrakv_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -395,7 +395,7 @@ func (x *OKResponse) String() string {
 func (*OKResponse) ProtoMessage() {}
 
 func (x *OKResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[6]
+	mi := &file_hydrakv_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -408,7 +408,7 @@ func (x *OKResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OKResponse.ProtoReflect.Descriptor instead.
 func (*OKResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{6}
+	return file_hydrakv_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *OKResponse) GetOk() bool {
@@ -430,7 +430,7 @@ type CreateDBResponse struct {
 
 func (x *CreateDBResponse) Reset() {
 	*x = CreateDBResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[7]
+	mi := &file_hydrakv_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -442,7 +442,7 @@ func (x *CreateDBResponse) String() string {
 func (*CreateDBResponse) ProtoMessage() {}
 
 func (x *CreateDBResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[7]
+	mi := &file_hydrakv_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -455,7 +455,7 @@ func (x *CreateDBResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDBResponse.ProtoReflect.Descriptor instead.
 func (*CreateDBResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{7}
+	return file_hydrakv_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *CreateDBResponse) GetName() string {
@@ -496,7 +496,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[8]
+	mi := &file_hydrakv_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -508,7 +508,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[8]
+	mi := &file_hydrakv_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -521,7 +521,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{8}
+	return file_hydrakv_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetResponse) GetFound() bool {
@@ -547,7 +547,7 @@ type ExistsResponse struct {
 
 func (x *ExistsResponse) Reset() {
 	*x = ExistsResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[9]
+	mi := &file_hydrakv_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -559,7 +559,7 @@ func (x *ExistsResponse) String() string {
 func (*ExistsResponse) ProtoMessage() {}
 
 func (x *ExistsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[9]
+	mi := &file_hydrakv_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -572,7 +572,7 @@ func (x *ExistsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExistsResponse.ProtoReflect.Descriptor instead.
 func (*ExistsResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{9}
+	return file_hydrakv_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ExistsResponse) GetExists() bool {
@@ -585,13 +585,14 @@ func (x *ExistsResponse) GetExists() bool {
 type FiFoLiFoDeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FiFoLiFoDeleteRequest) Reset() {
 	*x = FiFoLiFoDeleteRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[10]
+	mi := &file_hydrakv_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -603,7 +604,7 @@ func (x *FiFoLiFoDeleteRequest) String() string {
 func (*FiFoLiFoDeleteRequest) ProtoMessage() {}
 
 func (x *FiFoLiFoDeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[10]
+	mi := &file_hydrakv_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -616,7 +617,7 @@ func (x *FiFoLiFoDeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FiFoLiFoDeleteRequest.ProtoReflect.Descriptor instead.
 func (*FiFoLiFoDeleteRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{10}
+	return file_hydrakv_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *FiFoLiFoDeleteRequest) GetName() string {
@@ -626,17 +627,25 @@ func (x *FiFoLiFoDeleteRequest) GetName() string {
 	return ""
 }
 
+func (x *FiFoLiFoDeleteRequest) GetDb() string {
+	if x != nil {
+		return x.Db
+	}
+	return ""
+}
+
 type FiFoLiFoPushRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Db            string                 `protobuf:"bytes,3,opt,name=db,proto3" json:"db,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FiFoLiFoPushRequest) Reset() {
 	*x = FiFoLiFoPushRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[11]
+	mi := &file_hydrakv_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -648,7 +657,7 @@ func (x *FiFoLiFoPushRequest) String() string {
 func (*FiFoLiFoPushRequest) ProtoMessage() {}
 
 func (x *FiFoLiFoPushRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[11]
+	mi := &file_hydrakv_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,7 +670,7 @@ func (x *FiFoLiFoPushRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FiFoLiFoPushRequest.ProtoReflect.Descriptor instead.
 func (*FiFoLiFoPushRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{11}
+	return file_hydrakv_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *FiFoLiFoPushRequest) GetName() string {
@@ -678,16 +687,24 @@ func (x *FiFoLiFoPushRequest) GetValue() string {
 	return ""
 }
 
+func (x *FiFoLiFoPushRequest) GetDb() string {
+	if x != nil {
+		return x.Db
+	}
+	return ""
+}
+
 type FiFoLiFoPopRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FiFoLiFoPopRequest) Reset() {
 	*x = FiFoLiFoPopRequest{}
-	mi := &file_server_hydrakv_proto_msgTypes[12]
+	mi := &file_hydrakv_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -699,7 +716,7 @@ func (x *FiFoLiFoPopRequest) String() string {
 func (*FiFoLiFoPopRequest) ProtoMessage() {}
 
 func (x *FiFoLiFoPopRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[12]
+	mi := &file_hydrakv_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -712,7 +729,7 @@ func (x *FiFoLiFoPopRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FiFoLiFoPopRequest.ProtoReflect.Descriptor instead.
 func (*FiFoLiFoPopRequest) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{12}
+	return file_hydrakv_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *FiFoLiFoPopRequest) GetName() string {
@@ -722,16 +739,24 @@ func (x *FiFoLiFoPopRequest) GetName() string {
 	return ""
 }
 
+func (x *FiFoLiFoPopRequest) GetDb() string {
+	if x != nil {
+		return x.Db
+	}
+	return ""
+}
+
 type FiFoLiFoPopResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FiFoLiFoPopResponse) Reset() {
 	*x = FiFoLiFoPopResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[13]
+	mi := &file_hydrakv_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -743,7 +768,7 @@ func (x *FiFoLiFoPopResponse) String() string {
 func (*FiFoLiFoPopResponse) ProtoMessage() {}
 
 func (x *FiFoLiFoPopResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[13]
+	mi := &file_hydrakv_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,12 +781,19 @@ func (x *FiFoLiFoPopResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FiFoLiFoPopResponse.ProtoReflect.Descriptor instead.
 func (*FiFoLiFoPopResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{13}
+	return file_hydrakv_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *FiFoLiFoPopResponse) GetValue() string {
 	if x != nil {
 		return x.Value
+	}
+	return ""
+}
+
+func (x *FiFoLiFoPopResponse) GetDb() string {
+	if x != nil {
+		return x.Db
 	}
 	return ""
 }
@@ -775,7 +807,7 @@ type HealthResponse struct {
 
 func (x *HealthResponse) Reset() {
 	*x = HealthResponse{}
-	mi := &file_server_hydrakv_proto_msgTypes[14]
+	mi := &file_hydrakv_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -787,7 +819,7 @@ func (x *HealthResponse) String() string {
 func (*HealthResponse) ProtoMessage() {}
 
 func (x *HealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_server_hydrakv_proto_msgTypes[14]
+	mi := &file_hydrakv_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -800,7 +832,7 @@ func (x *HealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthResponse.ProtoReflect.Descriptor instead.
 func (*HealthResponse) Descriptor() ([]byte, []int) {
-	return file_server_hydrakv_proto_rawDescGZIP(), []int{14}
+	return file_hydrakv_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *HealthResponse) GetStatus() string {
@@ -810,11 +842,11 @@ func (x *HealthResponse) GetStatus() string {
 	return ""
 }
 
-var File_server_hydrakv_proto protoreflect.FileDescriptor
+var File_hydrakv_proto protoreflect.FileDescriptor
 
-const file_server_hydrakv_proto_rawDesc = "" +
+const file_hydrakv_proto_rawDesc = "" +
 	"\n" +
-	"\x14server/hydrakv.proto\x12\x02kv\x1a\x1bgoogle/protobuf/empty.proto\"%\n" +
+	"\rhydrakv.proto\x12\x02kv\x1a\x1bgoogle/protobuf/empty.proto\"%\n" +
 	"\x0fCreateDBRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"n\n" +
 	"\n" +
@@ -852,16 +884,20 @@ const file_server_hydrakv_proto_rawDesc = "" +
 	"\x05found\x18\x01 \x01(\bR\x05found\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\"(\n" +
 	"\x0eExistsResponse\x12\x16\n" +
-	"\x06exists\x18\x01 \x01(\bR\x06exists\"+\n" +
+	"\x06exists\x18\x01 \x01(\bR\x06exists\";\n" +
 	"\x15FiFoLiFoDeleteRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"?\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x0e\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\"O\n" +
 	"\x13FiFoLiFoPushRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"(\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\x12\x0e\n" +
+	"\x02db\x18\x03 \x01(\tR\x02db\"8\n" +
 	"\x12FiFoLiFoPopRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"+\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x0e\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\";\n" +
 	"\x13FiFoLiFoPopResponse\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\tR\x05value\"(\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\x12\x0e\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\"(\n" +
 	"\x0eHealthResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status2\xef\x04\n" +
 	"\tKVService\x125\n" +
@@ -879,19 +915,19 @@ const file_server_hydrakv_proto_rawDesc = "" +
 	"\x06Health\x12\x16.google.protobuf.Empty\x1a\x12.kv.HealthResponseB(Z&hydrakv/server/hydrakv/proto/kvpb;kvpbb\x06proto3"
 
 var (
-	file_server_hydrakv_proto_rawDescOnce sync.Once
-	file_server_hydrakv_proto_rawDescData []byte
+	file_hydrakv_proto_rawDescOnce sync.Once
+	file_hydrakv_proto_rawDescData []byte
 )
 
-func file_server_hydrakv_proto_rawDescGZIP() []byte {
-	file_server_hydrakv_proto_rawDescOnce.Do(func() {
-		file_server_hydrakv_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_server_hydrakv_proto_rawDesc), len(file_server_hydrakv_proto_rawDesc)))
+func file_hydrakv_proto_rawDescGZIP() []byte {
+	file_hydrakv_proto_rawDescOnce.Do(func() {
+		file_hydrakv_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_hydrakv_proto_rawDesc), len(file_hydrakv_proto_rawDesc)))
 	})
-	return file_server_hydrakv_proto_rawDescData
+	return file_hydrakv_proto_rawDescData
 }
 
-var file_server_hydrakv_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
-var file_server_hydrakv_proto_goTypes = []any{
+var file_hydrakv_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_hydrakv_proto_goTypes = []any{
 	(*CreateDBRequest)(nil),       // 0: kv.CreateDBRequest
 	(*SetRequest)(nil),            // 1: kv.SetRequest
 	(*GetRequest)(nil),            // 2: kv.GetRequest
@@ -909,7 +945,7 @@ var file_server_hydrakv_proto_goTypes = []any{
 	(*HealthResponse)(nil),        // 14: kv.HealthResponse
 	(*emptypb.Empty)(nil),         // 15: google.protobuf.Empty
 }
-var file_server_hydrakv_proto_depIdxs = []int32{
+var file_hydrakv_proto_depIdxs = []int32{
 	0,  // 0: kv.KVService.CreateDB:input_type -> kv.CreateDBRequest
 	1,  // 1: kv.KVService.Set:input_type -> kv.SetRequest
 	1,  // 2: kv.KVService.SetNX:input_type -> kv.SetRequest
@@ -941,26 +977,26 @@ var file_server_hydrakv_proto_depIdxs = []int32{
 	0,  // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_server_hydrakv_proto_init() }
-func file_server_hydrakv_proto_init() {
-	if File_server_hydrakv_proto != nil {
+func init() { file_hydrakv_proto_init() }
+func file_hydrakv_proto_init() {
+	if File_hydrakv_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_server_hydrakv_proto_rawDesc), len(file_server_hydrakv_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_hydrakv_proto_rawDesc), len(file_hydrakv_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_server_hydrakv_proto_goTypes,
-		DependencyIndexes: file_server_hydrakv_proto_depIdxs,
-		MessageInfos:      file_server_hydrakv_proto_msgTypes,
+		GoTypes:           file_hydrakv_proto_goTypes,
+		DependencyIndexes: file_hydrakv_proto_depIdxs,
+		MessageInfos:      file_hydrakv_proto_msgTypes,
 	}.Build()
-	File_server_hydrakv_proto = out.File
-	file_server_hydrakv_proto_goTypes = nil
-	file_server_hydrakv_proto_depIdxs = nil
+	File_hydrakv_proto = out.File
+	file_hydrakv_proto_goTypes = nil
+	file_hydrakv_proto_depIdxs = nil
 }

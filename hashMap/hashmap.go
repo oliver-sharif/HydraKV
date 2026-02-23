@@ -3,7 +3,9 @@ package hashMap
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"hydrakv/envhandler"
+	"hydrakv/fifolifo"
 	"hydrakv/xxhash64"
 	"io"
 	"log"
@@ -41,6 +43,7 @@ type HashMap struct {
 	TTlManager     *TTLManager
 	basketNum      int
 	basketLockNum  int
+	fifolifos      sync.Map
 }
 
 // Metrics for Prometheus in Hashmap
@@ -81,6 +84,7 @@ func NewHashMap(name string) (*HashMap, error) {
 		table: make([]*Basket, DefaultBasketSize), mutex: sync.RWMutex{}, xxhash: xxhash64.XXH,
 		Name: strings.ToUpper(name), reset: true, cpuCount: runtime.NumCPU(),
 		resizeCheck: make(chan struct{}, 1001), done: make(chan struct{}),
+		fifolifos: sync.Map{},
 	}
 
 	// Create TTL Manager for this HashMap
@@ -505,4 +509,56 @@ func (hm *HashMap) ResizeChecker() {
 			return
 		}
 	}
+}
+
+// AddFifoLifo adds a new FifoLifo instance to the server's map of FifoLifos, keyed by the specified name.'
+func (hm *HashMap) AddFifoLifo(name string, maxEntries int) error {
+	if _, ok := hm.fifolifos.Load(name); ok {
+		return fmt.Errorf("FifoLifo with name %s already exists", name)
+	}
+
+	lf, err := fifolifo.NewFiFoLiFo(name, maxEntries)
+
+	if err != nil {
+		return err
+	}
+
+	hm.fifolifos.Store(name, lf)
+	return err
+}
+
+// DelFiFoLiFo deletes a FifoLifo instance from the server's map of FifoLifos, keyed by the specified name.'
+func (hm *HashMap) DelFiFoLiFo(name string) {
+	hm.fifolifos.Delete(name)
+}
+
+// PushEntryFiFoLiFo adds an Entry to the Fifo Lifo
+func (hm *HashMap) PushEntryFiFoLiFo(fifolifoName, data string) (bool, error) {
+
+	// We are checking for empty data in the Api - so dont worry here :) ++ look in models!
+	val, ok := hm.fifolifos.Load(fifolifoName)
+	if !ok {
+		return false, fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return (val.(*fifolifo.FifoLifo)).Push(data)
+}
+
+// PopEntryFiFo removes an Entry from the Fifo Lifo
+func (hm *HashMap) PopEntryFiFo(fifolifoName string) (string, error) {
+
+	val, ok := hm.fifolifos.Load(fifolifoName)
+	if !ok {
+		return "", fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return (val.(*fifolifo.FifoLifo)).FPop()
+}
+
+// PopEntryLiFo removes an Entry from the Lifo Lifo
+func (hm *HashMap) PopEntryLiFo(fifolifoName string) (string, error) {
+
+	val, ok := hm.fifolifos.Load(fifolifoName)
+	if !ok {
+		return "", fmt.Errorf("FifoLifo with name %s does not exist", fifolifoName)
+	}
+	return (val.(*fifolifo.FifoLifo)).LPop()
 }
