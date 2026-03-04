@@ -27,7 +27,7 @@ COPY . .
 # -ldflags="-w -s" reduces binary size
 ARG TARGETARCH
 RUN if [ "$TARGETARCH" = "arm64" ]; then export CC=clang; fi; \
-    CGO_ENABLED=1 GOOS=linux go build -ldflags="-w -s -extldflags '-static'" -o hydrakv main.go
+    CGO_ENABLED=1 GOOS=linux go build -ldflags="-w -s -extldflags '-static'" -o hydrakv .
 
 # Stage 2: Create the final image
 FROM gcr.io/distroless/static-debian12

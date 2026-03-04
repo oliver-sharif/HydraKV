@@ -68,22 +68,26 @@ message ExistsResponse {
 message FiFoLiFoDeleteRequest {
   string name = 1;
   string db = 2;
+  string Apikey = 3;
 }
 
 message FiFoLiFoPushRequest {
   string name = 1;
   string value = 2;
   string db = 3;
+  string Apikey = 4;
 }
 
 message FiFoLiFoPopRequest {
   string name = 1;
   string db = 2;
+  string Apikey = 3;
 }
 
 message FiFoLiFoPopResponse {
   string value = 1;
   string db = 2;
+  string Apikey = 3;
 }
 
 message HealthResponse {

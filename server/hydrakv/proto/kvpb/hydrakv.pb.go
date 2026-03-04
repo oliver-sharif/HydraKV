@@ -586,6 +586,7 @@ type FiFoLiFoDeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
+	Apikey        string                 `protobuf:"bytes,3,opt,name=Apikey,proto3" json:"Apikey,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -634,11 +635,19 @@ func (x *FiFoLiFoDeleteRequest) GetDb() string {
 	return ""
 }
 
+func (x *FiFoLiFoDeleteRequest) GetApikey() string {
+	if x != nil {
+		return x.Apikey
+	}
+	return ""
+}
+
 type FiFoLiFoPushRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	Db            string                 `protobuf:"bytes,3,opt,name=db,proto3" json:"db,omitempty"`
+	Apikey        string                 `protobuf:"bytes,4,opt,name=Apikey,proto3" json:"Apikey,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -694,10 +703,18 @@ func (x *FiFoLiFoPushRequest) GetDb() string {
 	return ""
 }
 
+func (x *FiFoLiFoPushRequest) GetApikey() string {
+	if x != nil {
+		return x.Apikey
+	}
+	return ""
+}
+
 type FiFoLiFoPopRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
+	Apikey        string                 `protobuf:"bytes,3,opt,name=Apikey,proto3" json:"Apikey,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -746,10 +763,18 @@ func (x *FiFoLiFoPopRequest) GetDb() string {
 	return ""
 }
 
+func (x *FiFoLiFoPopRequest) GetApikey() string {
+	if x != nil {
+		return x.Apikey
+	}
+	return ""
+}
+
 type FiFoLiFoPopResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 	Db            string                 `protobuf:"bytes,2,opt,name=db,proto3" json:"db,omitempty"`
+	Apikey        string                 `protobuf:"bytes,3,opt,name=Apikey,proto3" json:"Apikey,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -794,6 +819,13 @@ func (x *FiFoLiFoPopResponse) GetValue() string {
 func (x *FiFoLiFoPopResponse) GetDb() string {
 	if x != nil {
 		return x.Db
+	}
+	return ""
+}
+
+func (x *FiFoLiFoPopResponse) GetApikey() string {
+	if x != nil {
+		return x.Apikey
 	}
 	return ""
 }
@@ -884,20 +916,24 @@ const file_hydrakv_proto_rawDesc = "" +
 	"\x05found\x18\x01 \x01(\bR\x05found\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\"(\n" +
 	"\x0eExistsResponse\x12\x16\n" +
-	"\x06exists\x18\x01 \x01(\bR\x06exists\";\n" +
+	"\x06exists\x18\x01 \x01(\bR\x06exists\"S\n" +
 	"\x15FiFoLiFoDeleteRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x0e\n" +
-	"\x02db\x18\x02 \x01(\tR\x02db\"O\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\x12\x16\n" +
+	"\x06Apikey\x18\x03 \x01(\tR\x06Apikey\"g\n" +
 	"\x13FiFoLiFoPushRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\x12\x0e\n" +
-	"\x02db\x18\x03 \x01(\tR\x02db\"8\n" +
+	"\x02db\x18\x03 \x01(\tR\x02db\x12\x16\n" +
+	"\x06Apikey\x18\x04 \x01(\tR\x06Apikey\"P\n" +
 	"\x12FiFoLiFoPopRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x0e\n" +
-	"\x02db\x18\x02 \x01(\tR\x02db\";\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\x12\x16\n" +
+	"\x06Apikey\x18\x03 \x01(\tR\x06Apikey\"S\n" +
 	"\x13FiFoLiFoPopResponse\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\tR\x05value\x12\x0e\n" +
-	"\x02db\x18\x02 \x01(\tR\x02db\"(\n" +
+	"\x02db\x18\x02 \x01(\tR\x02db\x12\x16\n" +
+	"\x06Apikey\x18\x03 \x01(\tR\x06Apikey\"(\n" +
 	"\x0eHealthResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status2\xef\x04\n" +
 	"\tKVService\x125\n" +
